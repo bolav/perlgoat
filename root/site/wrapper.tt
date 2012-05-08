@@ -1,0 +1,23 @@
+<html>
+<head>
+</head>
+<body>
+<table width="100%">
+<tr>
+<td width="20%" valign="top">
+<ul>
+<li><a href="[% c.uri_for('/') %]">Main page</a>
+<li><a href="[% c.uri_for('/list') %]">List users</a>
+<li><a href="[% c.uri_for('/admin') %]">Admin</a>
+[% IF admin %]
+<li><a href="[% c.uri_for('/logout') %]">Log out</a>
+[% END %]
+</ul>
+</td>
+<td valign="top">
+[% content %]
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Admin page!
+
+<ul>
+<li><a href="[% c.uri_for('adduser') %]">Add user</a>
+</ul>

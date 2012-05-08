@@ -20,6 +20,18 @@ perlgoat::Controller::Root - Root Controller for perlgoat
 
 =head1 METHODS
 
+=cut
+
+sub begin :Private {
+    my ($self, $c) = @_;
+
+    my $admin_cookie = $c->req->cookie('admin');
+    if ($admin_cookie and $admin_cookie->value) {
+        $c->stash->{admin} = 1;
+    }
+}
+
+
 =head2 index
 
 The root page (/)
@@ -30,7 +42,6 @@ sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
-    $c->response->body( $c->welcome_message );
 }
 
 =head2 default

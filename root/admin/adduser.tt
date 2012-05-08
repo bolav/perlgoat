@@ -1,0 +1,10 @@
+<form method="post" action="[% c.uri_for('adduser') %]">
+<input type="hidden" value="1" name="save">
+<table>
+<tr><td>Username</td><td><input type="text" name="username"></td></tr>
+<tr><td>Password</td><td><input type="password" name="password"></td></tr>
+<tr><td>Name</td><td><input type="text" name="name"></td></tr>
+<tr><td>Admin</td><td><input type="checkbox" name="admin" value="1"></td></tr>
+</table>
+<input type="submit" value="Save">
+</form>

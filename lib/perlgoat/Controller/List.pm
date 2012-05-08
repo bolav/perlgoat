@@ -24,7 +24,16 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched perlgoat::Controller::List in List.');
+    my $dbh = DBI->connect("dbi:SQLite:dbname=perlgoat.db","","");
+    my $sth = $dbh->prepare("SELECT * FROM admin");
+    $sth->execute( );
+    
+    my $res = [];
+
+    while ( my $hash = $sth->fetchrow_hashref ) {
+        push @$res, $hash;
+    }
+    $c->stash->{res} = $res;
 }
 
 

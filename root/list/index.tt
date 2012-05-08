@@ -1,0 +1,6 @@
+List users
+<ul>
+[% FOREACH user = res %]
+<li>[% user.name %]
+[% END %]
+</ul>

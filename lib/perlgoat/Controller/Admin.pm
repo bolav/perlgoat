@@ -4,6 +4,7 @@ use namespace::autoclean;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
+use Data::Dump qw/dump dd/;
 =head1 NAME
 
 perlgoat::Controller::Admin - Catalyst Controller
@@ -17,6 +18,18 @@ Catalyst Controller.
 =cut
 
 
+sub auto :Private {
+    my ($self, $c) = @_;
+
+    my $admin_cookie = $c->req->cookie('admin');
+    if ($admin_cookie and $admin_cookie->value) {
+        $c->stash->{admin} = 1;
+    }
+    else {
+        $c->response->cookies->{admin} = { value => 0 };
+    }
+}
+
 =head2 index
 
 =cut
@@ -24,7 +37,22 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched perlgoat::Controller::Admin in Admin.');
+    if (!$c->stash->{admin}) {
+         $c->response->redirect( $c->uri_for('/login') );
+    }
+}
+
+sub adduser :Local {
+    my ( $self, $c ) = @_;
+
+    my $user = $c->req->param('username');
+    my $pass = $c->req->param('password');
+    my $name = $c->req->param('name');
+    my $admin = $c->req->param('admin');
+    my $sql = "INSERT INTO admin (name,username,password,admin) VALUES ('$name','$user','$pass','$admin')";
+    my $dbh = DBI->connect("dbi:SQLite:dbname=perlgoat.db","","");
+    my $sth = $dbh->do($sql);
+    $c->log->debug($sql);
 }
 
 
